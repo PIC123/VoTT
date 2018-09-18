@@ -461,6 +461,13 @@
         return regions;
     },
 
+    getCurrentFrameNumber: function() {
+      if (this.imagelist){
+        return this.imageIndex;
+      } 
+      return this.video.currentTime === 0 ? 1 : Math.ceil((this.video.currentTime - this.videoStartTime) * this.framerate) + 1 ;
+    },
+
     getCurrentFrameId: function() {
       if (this.imagelist){
         // return this.imageIndex;
@@ -1211,7 +1218,7 @@
                 this.updateFrameCanvas(this.video);
 
             } else{
-                this.frameText.value = `${this.getCurrentFrameId() + 1}`; //${this.imagelist.length}`;
+                this.frameText.value = `${this.getCurrentFrameNumber() + 1}`; //${this.imagelist.length}`;
                 if(!this.seeking){
                     this.updateSeekBar();
                 }
