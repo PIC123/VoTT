@@ -90,6 +90,15 @@ function createWindow () {
             slashes: true
           }));
           break;
+        
+        case "help":
+          popup.setSize(359, 420);
+          popup.loadURL(url.format({
+            pathname: path.join(__dirname, 'src/public/html/help-configuration.html'),
+            protocol: 'file:',
+            slashes: true
+          }));
+          break;
 
         default: return; 
       }
@@ -166,7 +175,7 @@ function createWindow () {
         },
         {
           label: 'Active Learning',
-          accelerator: 'CmdOrCtrl+A',
+          accelerator: 'CmdOrCtrl+L',
           enabled: false,
           click () { mainWindow.webContents.send('review'); }
         }
@@ -196,6 +205,21 @@ function createWindow () {
           label: 'Refresh App',
           accelerator: 'CmdOrCtrl+Space',
           click () { mainWindow.reload(); }
+        }
+      ]
+    },
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'Keyboard Shortcuts',
+          accelerator: 'CmdOrCtrl+H',
+          click () { mainWindow.webContents.send('help');}
+        },
+        {
+          label: 'Tagging Guide',
+          // accelerator: 'CmdOrCtrl+Space',
+          click () { mainWindow.webContents.send('guide'); }
         }
       ]
     }
@@ -240,6 +264,7 @@ if (process.platform === 'darwin') {
   Menu.setApplicationMenu(menu);
 
 }
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
