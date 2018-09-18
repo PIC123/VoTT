@@ -196,7 +196,25 @@ There are two options to run a model for active learning within VoTT one is to u
 
 In the latest release we provide support for [Export and Review formats](https://github.com/CatalystCode/VOTT/tree/master/src/lib/detection_algorithms). To add a new object detection format, copy the interface folder and use the Yolo and CNTK implementations as reference. 
 
-## Upcoming Features 
+## Keyboard Shortcuts
+
+- Open Video: Ctrl + O
+- Open Image Directory: Ctrl + I
+- Save Tags: Ctrl + S
+- Toggle Tracking: Ctrl + T
+- Export Tags: Ctrl + E
+- Active Learning: Ctrl + L
+- Duplicate last frame regions: D
+- Delete Frame: Shift + Del
+- Open Developer Console: Ctrl + D
+- Refresh App: Ctrl + Space
+- Show Help: Ctrl + H
+- Select All: Ctrl + A
+- Cut: Ctrl + X
+- Copy: Ctrl + C
+- Paste: Ctrl + V
+
+## Upcoming Features
 
 - Tagging project management
 - Altenative Tracking algorithms such as optical flow.
