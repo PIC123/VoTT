@@ -1254,7 +1254,7 @@
             if (this.imagelist){ //image list handling
                 if(!this.seekBar.max)
                     this.seekBar.max = this.imagelist.length;
-                this.seekBar.value = this.getCurrentFrameId();
+                this.seekBar.value = this.getCurrentFrameNumber();
             } else { //video handling
                 this.seekBar.value = this.video.currentTime;
             }
