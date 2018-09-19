@@ -201,7 +201,9 @@ In the latest release we provide support for [Export and Review formats](https:/
 - Open Video: Ctrl + O
 - Open Image Directory: Ctrl + I
 - Save Tags: Ctrl + S
+- Toggle Play/Pause: Space
 - Toggle Tracking: Ctrl + T
+- Toggle Exclusive Add Mode: Crtl + N *(For adding smaller regions inside of a large region)*
 - Export Tags: Ctrl + E
 - Active Learning: Ctrl + L
 - Duplicate last frame regions: D
@@ -213,6 +215,8 @@ In the latest release we provide support for [Export and Review formats](https:/
 - Cut: Ctrl + X
 - Copy: Ctrl + C
 - Paste: Ctrl + V
+
+
 
 ## Upcoming Features
 

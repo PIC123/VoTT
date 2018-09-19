@@ -218,6 +218,9 @@ document.addEventListener('keyup', (e) => {
       e.stopPropagation();
       deleteFrame()
     }
+    if(e.code == 'Space'){
+      videotagging.playPauseClicked();
+    }
   }
   if(e.ctrlKey && e.code == 'KeyV'){
     // console.log('yay! Pasting');
