@@ -55,7 +55,7 @@ ipcRenderer.on('export', (event, message) => {
 
 ipcRenderer.on('export-tags', (event, exportConfig) => {
   addLoader();
-  detection.export(videotagging.imagelist, exportConfig.exportFormat, exportConfig.exportUntil, exportConfig.exportPath, testSetSize, () => {
+  detection.export(videotagging.imagelist, exportConfig.exportFormat, exportConfig.exportUntil, exportConfig.exportPath, exportConfig.testSplit, () => {
      if(!videotagging.imagelist){
        videotagging.video.oncanplay = updateVisitedFrames;
       } 
@@ -386,19 +386,21 @@ function openPath(pathName, isDir) {
             if (videotagging.imagelist.length){
               //Check if tagging was done in previous version of VOTT
               console.log(Array.from(visitedFrames));
+
+              videotagging.imagelist = videotagging.imagelist.map((filepath) => {return path.join(pathName,filepath)});
+              videotagging.src = pathName; 
+
               if(!isNaN(Array.from(visitedFrames)[0])){
                 visitedFramesNumber = visitedFrames;
-                visitedFrames = new Set(Array.from(visitedFramesNumber).map(frame => videotagging.imagelist[parseInt(frame)]))
+                visitedFrames = new Set(Array.from(visitedFramesNumber).map(frame => videotagging.imagelist[parseInt(frame)].split("\\").pop()))
                 
                 //Replace the keys of the frames object
                 Object.keys(videotagging.inputframes).map(function(key, index) {
                   videotagging.inputframes[videotagging.imagelist[key].split("\\").pop()] = videotagging.inputframes[key];
                   delete videotagging.inputframes[key];
                 }, this);
+                save()
               }
-
-              videotagging.imagelist = videotagging.imagelist.map((filepath) => {return path.join(pathName,filepath)});
-              videotagging.src = pathName; 
               //track visited frames
               $("#video-tagging").off("stepFwdClicked-AfterStep", updateVisitedFrames);
               $("#video-tagging").on("stepFwdClicked-AfterStep", updateVisitedFrames);

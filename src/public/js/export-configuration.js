@@ -19,7 +19,8 @@ function getExportConfiguration() {
     var exportConfig = {
         exportUntil: $('#exportTo').val(),
         exportPath: $('#output').val(),
-        exportFormat: $('#format').val()
+        exportFormat: $('#format').val(),
+        testSplit: $('#testSplit').val()
     };
 
     ipcRenderer.send('export-tags', exportConfig); 

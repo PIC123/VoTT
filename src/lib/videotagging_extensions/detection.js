@@ -83,12 +83,68 @@ function Detection(videotagging, visitedFrames) {
                             reject(err);
                         }
                         imagesProcessed += 1;
+                        console.log(`image#: ${imagesProcessed}`);
                         if (imagesProcessed == dir.length) {
+                            console.log(`images processed: ${imagesProcessed}`);
                             resolve();
                         }
                     });
                 }
             });
+        });
+    }
+
+    this.mapFiles = function (frameHandler, until) {
+        return new Promise((resolve, reject) => {
+            //init canvas buffer
+            var frameCanvas = document.createElement("canvas");
+            frameCanvas.width = self.videotagging.video.videoWidth;
+            frameCanvas.height = self.videotagging.video.videoHeight;
+            var canvasContext = frameCanvas.getContext("2d");
+
+            // start exporting frames using the canplay eventListener
+            self.videotagging.video.oncanplay = iterateFrames;
+            self.videotagging.video.currentTime = 0;
+            self.videotagging.playingCallback();
+
+            //resolve export until
+            var isLastFrame;
+            if (until === "tagged") {
+                isLastFrame = function (frameId) {
+                    return (!Object.keys(self.videotagging.frames).length) || (frameId >= parseInt(Object.keys(self.videotagging.frames)[Object.keys(self.videotagging.frames).length - 1]));
+                }
+            }
+            else if (until === "visited") {
+                isLastFrame = function (frameId) {
+                    var lastVisitedFrameId = Math.max.apply(Math, Array.from(self.visitedFrames));
+                    return (frameId >= lastVisitedFrameId);
+                }
+            }
+            else { //last
+                isLastFrame = function (frameId) {
+                    return (self.videotagging.video.currentTime >= self.videotagging.video.duration);
+                }
+            }
+
+            function iterateFrames() {
+                var frameId = self.videotagging.getCurrentFrameNumber();
+                var lastFrame = isLastFrame(frameId);
+
+                if (lastFrame) {
+                    self.videotagging.video.oncanplay = null;
+                    resolve();
+                }
+
+                var frameName = `${path.basename(self.videotagging.src, path.extname(self.videotagging.src))}_frame_${frameId}.jpg`
+                frameHandler(frameName, frameId, frameCanvas, canvasContext, (err) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    if (!lastFrame) {
+                        self.videotagging.stepFwdClicked(false);
+                    }
+                })
+            }
         });
     }
 
