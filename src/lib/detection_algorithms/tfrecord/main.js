@@ -1,2 +1,2 @@
-module.exports.Exporter = require('./exporter.js').Exporter
-module.exports.displayName = 'TFRecords'
+module.exports.Exporter = require('./exporter.js').Exporter;
+module.exports.displayName = 'TFRecords';
